@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
+#include <iostream>
 
 class InputOutput
 {
@@ -16,6 +18,9 @@ public:
     bool saveMap();
     bool loadMap();
     bool createFile();
+    void setFileName(std::string fileName);
+    void setfilePath(std::string filePath);
+    std::vector<std::string> getMatrixInput();
 
 };
 

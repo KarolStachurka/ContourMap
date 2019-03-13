@@ -8,8 +8,8 @@
 class UIDialog
 {
 private:
-    Board board;
-    InputOutput inputOutput;
+    Board *board;
+    InputOutput *inputOutput;
 
 public:
     UIDialog();
