@@ -30,7 +30,8 @@ SOURCES += \
     board.cpp \
     utils.cpp \
     inputoutput.cpp \
-    uidialog.cpp
+    uidialog.cpp \
+    colorpalette.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     board.h \
     utils.h \
     inputoutput.h \
-    uidialog.h
+    uidialog.h \
+    colorpalette.h
 
 FORMS += \
         mainwindow.ui

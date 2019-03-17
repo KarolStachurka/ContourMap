@@ -23,6 +23,7 @@ public:
     void setColoursSliders(QColor up, QColor down);
     void colourUpperSliderRectangle(QColor up);
     void colourLowerSliderRectangle(QColor down);
+    void setColorPaletteList(vector<std::string> paletteList);
 
 private slots:
     void on_loadFileButton_clicked();

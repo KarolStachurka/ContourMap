@@ -16,9 +16,9 @@ bool InputOutput::loadMatrix()
     }
 }
 
-void InputOutput::setFileName(std::string fileName)
+void InputOutput::setMatrixFileName(std::string matrixFileName)
 {
-    this->fileName = fileName;
+    this->matrixFileName = matrixFileName;
 }
 
 std::vector<std::string> InputOutput::getMatrixInput()

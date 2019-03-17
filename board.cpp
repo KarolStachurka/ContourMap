@@ -31,10 +31,10 @@ Board::Board(std::vector<std::string> inputMatrix)
         {
             Field field(row, col, j);
             board.push_back(field);
-            col++;
+            row++;
         }
-        row++;
-        col = 0;
+        col++;
+        row = 0;
     }
 }
 

@@ -41,7 +41,13 @@ void MainWindow::on_loadFileButton_clicked()
 
     }
     ui->mapGraphicView->setScene(scene);
+}
 
+void MainWindow::setColorPaletteList(vector<std::string> paletteList)
+{
+    for(auto name:paletteList)
+    {
+    }
 }
 
 void MainWindow::colourSliderRectangles(QColor up, QColor down)
