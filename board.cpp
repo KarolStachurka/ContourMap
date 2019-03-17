@@ -37,3 +37,8 @@ Board::Board(std::vector<std::string> inputMatrix)
         col = 0;
     }
 }
+
+std::vector<Field> Board::getBoard()
+{
+    return board;
+}

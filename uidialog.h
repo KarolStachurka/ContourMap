@@ -8,12 +8,13 @@
 class UIDialog
 {
 private:
-    Board *board;
+    Board board;
     InputOutput *inputOutput;
 
 public:
     UIDialog();
     void display();
+    Board getBoard();
 
 };
 

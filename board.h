@@ -17,6 +17,7 @@ public:
     Board(std::vector<std::string> inputMatrix);
     void createBoard();
     void colourBoard();
+    std::vector<Field> getBoard();
 };
 
 #endif // BOARD_H

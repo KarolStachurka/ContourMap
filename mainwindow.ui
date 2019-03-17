@@ -81,7 +81,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="plainTextEdit"/>
+      <widget class="QGraphicsView" name="mapGraphicView"/>
      </item>
      <item>
       <spacer name="verticalSpacer_2">

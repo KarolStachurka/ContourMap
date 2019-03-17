@@ -10,5 +10,10 @@ void UIDialog::display()
 {
     inputOutput->setFileName("test.csv");
     inputOutput->loadMatrix();
-    board = new Board(inputOutput->getMatrixInput());
+    board = Board(inputOutput->getMatrixInput());
+}
+
+Board UIDialog::getBoard()
+{
+    return board;
 }
