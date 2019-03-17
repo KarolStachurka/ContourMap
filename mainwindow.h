@@ -19,15 +19,38 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void diplayBoard();
+    void colourSliderRectangles(QColor up, QColor down);
+    void setColoursSliders(QColor up, QColor down);
+    void colourUpperSliderRectangle(QColor up);
+    void colourLowerSliderRectangle(QColor down);
 
 private slots:
     void on_loadFileButton_clicked();
     
+    void on_redMaxSlider_sliderMoved(int position);
+
+    void on_greenMaxSlider_sliderMoved(int position);
+
+    void on_blueMaxSlider_sliderMoved(int position);
+
+    void on_redMinSlider_sliderMoved(int position);
+
+    void on_greenMinSlider_sliderMoved(int position);
+
+    void on_blueMinSlider_sliderMoved(int position);
+
+    void on_savePaletteButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     UIDialog *uiDialog;
     std::vector <QGraphicsRectItem *> boardObjects;
     QGraphicsScene *scene;
+    QGraphicsScene *upperRect;
+    QGraphicsRectItem *upperRectColor;
+    QGraphicsScene *lowerRect;
+    QGraphicsRectItem *lowerRectColor;
+
 };
 
 #endif // MAINWINDOW_H
