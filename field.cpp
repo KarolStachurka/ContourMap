@@ -9,7 +9,7 @@ Field::Field(int x, int y, double value)
 {
     setCordinates(x,y);
     this->value = value;
-    setColor(0,0,0);
+    setColor(100,0,0);
 }
 
 void Field::setCordinates(int x, int y)

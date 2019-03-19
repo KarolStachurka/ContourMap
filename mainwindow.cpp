@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->paletteListView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     uiDialog = new UIDialog();
     upperRect = new QGraphicsScene;
     upperRectColor = new QGraphicsRectItem;
@@ -19,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->greenMaxSlider->setMaximum(255);
     ui->redMinSlider->setMaximum(255);
     ui->redMaxSlider->setMaximum(255);
+
+    setColorPaletteList(uiDialog->getPaletteList());
+
 }
 
 MainWindow::~MainWindow()
@@ -43,11 +47,17 @@ void MainWindow::on_loadFileButton_clicked()
     ui->mapGraphicView->setScene(scene);
 }
 
-void MainWindow::setColorPaletteList(vector<std::string> paletteList)
+void MainWindow::setColorPaletteList(std::vector<std::string> paletteList)
 {
-    for(auto name:paletteList)
+    int rows = paletteList.size();
+    QStandardItemModel *model = new QStandardItemModel( rows, 1, this );
+    for(int i = 0; i < paletteList.size(); i++)
     {
+        QString rowName = QString::fromStdString(paletteList.at(i));
+        QStandardItem *item = new QStandardItem(rowName);
+        model->setItem(i, 0, item);
     }
+    ui->paletteListView->setModel(model);
 }
 
 void MainWindow::colourSliderRectangles(QColor up, QColor down)
@@ -143,5 +153,29 @@ void MainWindow::on_blueMinSlider_sliderMoved(int position)
 
 void MainWindow::on_savePaletteButton_clicked()
 {
+    QModelIndex index = ui->paletteListView->currentIndex();
+    std::string identifier = "palette" + std::to_string(index.row());
+    std::string name = ui->paletteNameTextEdit->text().toStdString();
+    int redDown = ui->redMinSlider->value();
+    int greenDown = ui->greenMinSlider->value();
+    int blueDown = ui->blueMinSlider->value();
+    int redUp = ui->redMaxSlider->value();
+    int greenUp = ui->greenMaxSlider->value();
+    int blueUp = ui->blueMaxSlider->value();
+    QColor down = QColor(redDown,greenDown,blueDown);
+    QColor up = QColor(redUp,greenUp,blueUp);
+    uiDialog->setPaletteColors(identifier,name,up,down);
+    setColorPaletteList(uiDialog->getPaletteList());
+}
 
+void MainWindow::on_paletteListView_clicked(const QModelIndex &index)
+{
+    QColor maximum,minimum;
+    std::string name,identifier;
+    identifier = "palette" + std::to_string(index.row());
+    uiDialog->getPaletteColors(identifier,name,maximum,minimum);
+    colourLowerSliderRectangle(minimum);
+    colourUpperSliderRectangle(maximum);
+    setColoursSliders(maximum,minimum);
+    ui->paletteNameTextEdit->setText(QString::fromStdString(name));
 }

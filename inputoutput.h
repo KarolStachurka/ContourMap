@@ -11,6 +11,7 @@ class InputOutput
 private:
     std::string filePath;
     std::string matrixFileName;
+    std::string configFileName;
     std::vector<std::string> matrixInput;
     std::vector<std::string> configInput;
 public:

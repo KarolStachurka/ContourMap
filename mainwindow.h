@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QStandardItemModel>
+#include <vector>
 #include <uidialog.h>
 #include <field.h>
 
@@ -23,7 +25,7 @@ public:
     void setColoursSliders(QColor up, QColor down);
     void colourUpperSliderRectangle(QColor up);
     void colourLowerSliderRectangle(QColor down);
-    void setColorPaletteList(vector<std::string> paletteList);
+    void setColorPaletteList(std::vector<std::string> paletteList);
 
 private slots:
     void on_loadFileButton_clicked();
@@ -41,6 +43,8 @@ private slots:
     void on_blueMinSlider_sliderMoved(int position);
 
     void on_savePaletteButton_clicked();
+
+    void on_paletteListView_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
