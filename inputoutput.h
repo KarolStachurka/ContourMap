@@ -23,6 +23,7 @@ public:
     bool createFile();
     void setMatrixFileName(std::string matrixFileName);
     void setfilePath(std::string filePath);
+    void saveConfig(std::vector<std::string> config);
     std::vector<std::string> getMatrixInput();
     std::vector<std::string> getConfigInput();
 };

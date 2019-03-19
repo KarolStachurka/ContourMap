@@ -8,6 +8,11 @@ UIDialog::UIDialog()
 
 }
 
+UIDialog::~UIDialog()
+{
+    inputOutput->saveConfig(createPalettesConfig());
+}
+
 void UIDialog::display()
 {
     inputOutput->setMatrixFileName("test.csv");
@@ -68,6 +73,27 @@ void UIDialog::setPalettesFromConfig(std::vector<std::string> config)
         }
     }
 }
+
+std::vector<std::string> UIDialog::createPalettesConfig()
+{
+    std::vector<std::string> config;
+    for( auto &i:colorPaletteMap)
+    {
+        std::stringstream ss;
+        ss << i.first << ","
+           << i.second.getName() << ","
+           << i.second.getMinimumColor().red() << ","
+           << i.second.getMinimumColor().green() << ","
+           << i.second.getMinimumColor().blue() << ","
+           << i.second.getMaximumColor().red() << ","
+           << i.second.getMaximumColor().green() << ","
+           << i.second.getMaximumColor().blue();
+        config.push_back(ss.str());
+    }
+    return config;
+
+}
+
 
 Board UIDialog::getBoard()
 {

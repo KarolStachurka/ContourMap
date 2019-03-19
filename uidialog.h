@@ -16,6 +16,7 @@ private:
 
 public:
     UIDialog();
+    ~UIDialog();
     void display();
     Board getBoard();
     std::vector<std::string> createPalettesConfig();

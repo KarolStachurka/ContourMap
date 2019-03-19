@@ -27,6 +27,16 @@ bool InputOutput::loadConfig()
     }
 }
 
+void InputOutput::saveConfig(std::vector<std::string> config)
+{
+    std::ofstream file;
+    file.open(configFileName);
+    for(auto i:config)
+    {
+        file << i << "\n";
+    }
+}
+
 void InputOutput::setMatrixFileName(std::string matrixFileName)
 {
     this->matrixFileName = matrixFileName;
