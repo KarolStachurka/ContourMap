@@ -23,7 +23,7 @@ void Field::setColor(int red, int green, int blue)
     color = QColor(red,green,blue);
 }
 
-int Field::getValue()
+double Field::getValue()
 {
     return value;
 }
@@ -41,4 +41,19 @@ int Field::getY()
 QColor Field::getColor()
 {
     return color;
+}
+
+bool Field::operator<(const Field& a)
+{
+    return this->value < a.value;
+}
+
+bool Field::operator>(const Field& a)
+{
+    return this->value > a.value;
+}
+
+bool Field::operator=(const Field& a)
+{
+    return this->value = a.value;
 }

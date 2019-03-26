@@ -8,6 +8,7 @@
 #include <vector>
 #include <uidialog.h>
 #include <field.h>
+#include <utils.h>
 
 namespace Ui {
 class MainWindow;

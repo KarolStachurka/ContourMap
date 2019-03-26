@@ -22,8 +22,12 @@ public:
     void setColor(int red, int green, int blue);
     int getX();
     int getY();
-    int getValue();
+    double getValue();
     QColor getColor();
+
+    bool operator<(const Field& a);
+    bool operator>(const Field& a);
+    bool operator=(const Field& a);
 };
 
 #endif // FIELD_H

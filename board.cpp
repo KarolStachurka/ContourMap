@@ -31,11 +31,28 @@ Board::Board(std::vector<std::string> inputMatrix)
         {
             Field field(row, col, j);
             board.push_back(field);
-            row++;
+            col++;
         }
-        col++;
-        row = 0;
+        row++;
+        col = 0;
     }
+    colourBoard();
+}
+
+void Board::colourBoard()
+{
+    std::sort(board.begin(),board.end());
+    Field max = *std::max_element(board.begin(),board.end());
+    Field min = *std::min_element(board.begin(),board.end());
+    double maxValue = max.getValue();
+    double minValue= min.getValue();
+
+    for(Field &i:board)
+    {
+        double ratio = getPositionInRange(minValue,maxValue,i.getValue());
+        i.setColor(ratio*255,ratio*255,0);
+    }
+
 }
 
 std::vector<Field> Board::getBoard()

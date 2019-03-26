@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include <field.h>
+#include <utils.h>
 
 
 class Board

@@ -39,13 +39,20 @@ void MainWindow::on_loadFileButton_clicked()
     for(Field field:board)
     {
         QGraphicsRectItem *item = new QGraphicsRectItem;
+        item->setPen(Qt::NoPen);
         item->setRect(field.getX()*20,field.getY()*20,20,20);
         item->setBrush(QBrush(field.getColor()));
         scene->addItem(item);
         boardObjects.push_back(item);
 
     }
+    ui->mapGraphicView->fitInView(0,0,scene->width(),scene->height(), Qt::KeepAspectRatio);
     ui->mapGraphicView->setScene(scene);
+    Field max = *std::max_element(board.begin(),board.end());
+    Field min = *std::min_element(board.begin(),board.end());
+    ui->maxValueLabel->setText(QString::number(max.getValue()));
+    ui->minValueLabel->setText(QString::number(min.getValue()));
+
 }
 
 void MainWindow::setColorPaletteList(std::vector<std::string> paletteList)
