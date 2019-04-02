@@ -34,23 +34,30 @@ Board::Board(std::vector<std::string> inputMatrix)
             col++;
         }
         row++;
+        sizeY = col;
         col = 0;
     }
-    colourBoard();
+    sizeX = row;
 }
 
-void Board::colourBoard()
+void Board::colourBoard(QColor max, QColor min)
 {
-    std::sort(board.begin(),board.end());
-    Field max = *std::max_element(board.begin(),board.end());
-    Field min = *std::min_element(board.begin(),board.end());
-    double maxValue = max.getValue();
-    double minValue= min.getValue();
+    Field maxValueField = *std::max_element(board.begin(),board.end());
+    Field minValueField = *std::min_element(board.begin(),board.end());
+    double maxValue = maxValueField.getValue();
+    double minValue= minValueField.getValue();
+
+    int redRatio = max.red() - min.red();
+    int greenRatio = max.green() - min.green();
+    int blueRatio = max.blue() - min.blue();
 
     for(Field &i:board)
     {
         double ratio = getPositionInRange(minValue,maxValue,i.getValue());
-        i.setColor(ratio*255,ratio*255,0);
+        i.setColor(ratio * redRatio + min.red(),
+                   ratio * greenRatio + min.green(),
+                   ratio * blueRatio + min.blue()
+                   );
     }
 
 }
@@ -58,4 +65,14 @@ void Board::colourBoard()
 std::vector<Field> Board::getBoard()
 {
     return board;
+}
+
+int Board::getSizeX()
+{
+    return sizeX;
+}
+
+int Board::getSizeY()
+{
+    return sizeY;
 }

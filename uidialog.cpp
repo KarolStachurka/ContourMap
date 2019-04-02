@@ -18,6 +18,7 @@ void UIDialog::display()
     inputOutput->setMatrixFileName("test.csv");
     inputOutput->loadMatrix();
     board = Board(inputOutput->getMatrixInput());
+    board.colourBoard(colorPalette.getMaximumColor(), colorPalette.getMinimumColor());
 }
 
 void UIDialog::addNewPalette(std::string identifier, std::string name, QColor maximum, QColor minimum)
@@ -40,7 +41,6 @@ void UIDialog::setPaletteColors(std::string identifier, std::string name, QColor
     palette.setName(name);
     palette.setMaximumColor(maximum);
     palette.setMinimumColor(minimum);
-    std::cout << colorPaletteMap[identifier].getMinimumColor().red();
 }
 
 void UIDialog::setPalettesFromConfig(std::vector<std::string> config)
@@ -92,6 +92,15 @@ std::vector<std::string> UIDialog::createPalettesConfig()
     }
     return config;
 
+}
+
+void UIDialog::setColorPalette(ColorPalette colorPalette)
+{
+    this->colorPalette = colorPalette;
+}
+ColorPalette UIDialog::getColorPalette()
+{
+    return colorPalette;
 }
 
 

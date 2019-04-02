@@ -22,6 +22,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void diplayBoard();
+    void clearScene();
     void colourSliderRectangles(QColor up, QColor down);
     void setColoursSliders(QColor up, QColor down);
     void colourUpperSliderRectangle(QColor up);
@@ -46,6 +47,8 @@ private slots:
     void on_savePaletteButton_clicked();
 
     void on_paletteListView_clicked(const QModelIndex &index);
+
+    void on_saveChartButton_clicked();
 
 private:
     Ui::MainWindow *ui;

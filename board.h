@@ -12,13 +12,17 @@
 class Board
 {
     std::vector<Field> board;
+    int sizeX;
+    int sizeY;
 
 public:
     Board();
     Board(std::vector<std::string> inputMatrix);
     void createBoard();
-    void colourBoard();
+    void colourBoard(QColor max, QColor min);
     std::vector<Field> getBoard();
+    int getSizeX();
+    int getSizeY();
 };
 
 #endif // BOARD_H

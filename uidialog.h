@@ -13,11 +13,14 @@ private:
     Board board;
     InputOutput *inputOutput;
     std::map<std::string, ColorPalette> colorPaletteMap;
+    ColorPalette colorPalette;
 
 public:
     UIDialog();
     ~UIDialog();
     void display();
+    void setColorPalette(ColorPalette colorPalette);
+    ColorPalette getColorPalette();
     Board getBoard();
     std::vector<std::string> createPalettesConfig();
     std::vector<std::string> getPaletteList();

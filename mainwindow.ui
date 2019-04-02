@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>879</width>
-    <height>713</height>
+    <width>1096</width>
+    <height>893</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -77,8 +77,8 @@
      <rect>
       <x>20</x>
       <y>110</y>
-      <width>841</width>
-      <height>531</height>
+      <width>1051</width>
+      <height>702</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -96,7 +96,26 @@
       </spacer>
      </item>
      <item>
-      <widget class="QGraphicsView" name="mapGraphicView"/>
+      <widget class="QGraphicsView" name="mapGraphicView">
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>500</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>500</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>500</width>
+         <height>500</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer_2">
@@ -113,23 +132,7 @@
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0" rowspan="8">
-        <widget class="QListView" name="paletteListView">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" colspan="3">
+       <item row="2" column="2" colspan="3">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>RGB</string>
@@ -139,14 +142,14 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="4" rowspan="3">
+       <item row="7" column="4" rowspan="3">
         <widget class="QSlider" name="blueMinSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="5" column="2" colspan="3">
+       <item row="6" column="2" colspan="3">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>RGB</string>
@@ -156,7 +159,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
+       <item row="8" column="1">
         <widget class="QGraphicsView" name="lowerColorDisplay">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -184,38 +187,28 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QLabel" name="minValueLabel">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="0" column="2" colspan="3">
-        <widget class="QLineEdit" name="paletteNameTextEdit"/>
-       </item>
-       <item row="6" column="3" rowspan="3">
+       <item row="7" column="3" rowspan="3">
         <widget class="QSlider" name="greenMinSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="6" column="2" rowspan="3">
+       <item row="7" column="2" rowspan="3">
         <widget class="QSlider" name="redMinSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Palette Name:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2" rowspan="3">
+       <item row="3" column="2" rowspan="3">
         <widget class="QSlider" name="redMaxSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -229,28 +222,14 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="4" rowspan="3">
+       <item row="3" column="4" rowspan="3">
         <widget class="QSlider" name="blueMaxSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="3" rowspan="3">
-        <widget class="QSlider" name="greenMaxSlider">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="maxValueLabel">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QGraphicsView" name="upperColorDisplay">
          <property name="maximumSize">
           <size>
@@ -266,6 +245,46 @@
          </property>
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3" rowspan="3">
+        <widget class="QSlider" name="greenMaxSlider">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="maxValueLabel">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="4">
+        <widget class="QLineEdit" name="paletteNameTextEdit"/>
+       </item>
+       <item row="0" column="1" colspan="4">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Palette Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" rowspan="9">
+        <widget class="QListView" name="paletteListView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -292,7 +311,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>879</width>
+     <width>1096</width>
      <height>22</height>
     </rect>
    </property>

@@ -9,6 +9,7 @@ bool InputOutput::loadMatrix()
 {
     std::ifstream file;
     std::string line;
+    matrixInput.clear();
     file.open(matrixFileName);
     while(std::getline(file,line,'\n'))
     {
@@ -20,6 +21,7 @@ bool InputOutput::loadConfig()
 {
     std::ifstream file;
     std::string line;
+    configInput.clear();
     file.open(configFileName);
     while(std::getline(file,line,'\n'))
     {

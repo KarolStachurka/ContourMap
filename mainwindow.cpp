@@ -35,24 +35,36 @@ void MainWindow::on_loadFileButton_clicked()
 {
     uiDialog->display();
     scene = new QGraphicsScene;
+    clearScene();
     std::vector<Field> board = uiDialog->getBoard().getBoard();
+    int sizeX = ui->mapGraphicView->size().width()/uiDialog->getBoard().getSizeX();
+    int sizeY = ui->mapGraphicView->size().height()/uiDialog->getBoard().getSizeY();
     for(Field field:board)
     {
         QGraphicsRectItem *item = new QGraphicsRectItem;
         item->setPen(Qt::NoPen);
-        item->setRect(field.getX()*20,field.getY()*20,20,20);
+        item->setRect(field.getX()*sizeX,field.getY()*sizeY,sizeX,sizeY);
         item->setBrush(QBrush(field.getColor()));
         scene->addItem(item);
         boardObjects.push_back(item);
-
     }
-    ui->mapGraphicView->fitInView(0,0,scene->width(),scene->height(), Qt::KeepAspectRatio);
     ui->mapGraphicView->setScene(scene);
+    ui->mapGraphicView->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
     Field max = *std::max_element(board.begin(),board.end());
     Field min = *std::min_element(board.begin(),board.end());
     ui->maxValueLabel->setText(QString::number(max.getValue()));
     ui->minValueLabel->setText(QString::number(min.getValue()));
 
+}
+
+void MainWindow::clearScene()
+{
+    for(auto &i:boardObjects)
+    {
+        delete i;
+    }
+    boardObjects.clear();
+    scene->clear();
 }
 
 void MainWindow::setColorPaletteList(std::vector<std::string> paletteList)
@@ -185,5 +197,12 @@ void MainWindow::on_paletteListView_clicked(const QModelIndex &index)
     colourLowerSliderRectangle(minimum);
     colourUpperSliderRectangle(maximum);
     setColoursSliders(maximum,minimum);
+    uiDialog->setColorPalette(ColorPalette(name,maximum,minimum));
     ui->paletteNameTextEdit->setText(QString::fromStdString(name));
+    uiDialog->display();
+}
+
+void MainWindow::on_saveChartButton_clicked()
+{
+
 }
