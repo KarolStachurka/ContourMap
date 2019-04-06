@@ -2,7 +2,6 @@
 
 Board::Board()
 {
-
 }
 
 Board::Board(std::vector<std::string> inputMatrix)

@@ -19,6 +19,7 @@ public:
     UIDialog();
     ~UIDialog();
     void display();
+    void loadBoard(std::string fileName);
     void setColorPalette(ColorPalette colorPalette);
     ColorPalette getColorPalette();
     Board getBoard();

@@ -5,7 +5,6 @@ UIDialog::UIDialog()
     inputOutput = new InputOutput();
     inputOutput->loadConfig();
     setPalettesFromConfig(inputOutput->getConfigInput());
-
 }
 
 UIDialog::~UIDialog()
@@ -15,7 +14,13 @@ UIDialog::~UIDialog()
 
 void UIDialog::display()
 {
-    inputOutput->setMatrixFileName("test.csv");
+    //loadBoard("test.csv");
+    board.colourBoard(colorPalette.getMaximumColor(), colorPalette.getMinimumColor());
+}
+
+void UIDialog::loadBoard(std::string fileName)
+{
+    inputOutput->setMatrixFileName(fileName);
     inputOutput->loadMatrix();
     board = Board(inputOutput->getMatrixInput());
     board.colourBoard(colorPalette.getMaximumColor(), colorPalette.getMinimumColor());
@@ -64,12 +69,15 @@ void UIDialog::setPalettesFromConfig(std::vector<std::string> config)
         }
         try
         {
-            QColor maximum = QColor(configRow[0],configRow[1],configRow[2]);
-            QColor minimum = QColor(configRow[3],configRow[4],configRow[5]);
+            QColor maximum;
+            maximum.setHsv(configRow[0],configRow[1],configRow[2]);
+            QColor minimum;
+            minimum.setHsv(configRow[3],configRow[4],configRow[5]);
             addNewPalette(identifier,name,maximum,minimum);
         }
         catch(std::exception e)
         {
+            std::cout<< e.what() << std::endl;
         }
     }
 }
@@ -82,12 +90,12 @@ std::vector<std::string> UIDialog::createPalettesConfig()
         std::stringstream ss;
         ss << i.first << ","
            << i.second.getName() << ","
-           << i.second.getMinimumColor().red() << ","
-           << i.second.getMinimumColor().green() << ","
-           << i.second.getMinimumColor().blue() << ","
-           << i.second.getMaximumColor().red() << ","
-           << i.second.getMaximumColor().green() << ","
-           << i.second.getMaximumColor().blue();
+           << i.second.getMinimumColor().hue() << ","
+           << i.second.getMinimumColor().saturation() << ","
+           << i.second.getMinimumColor().value() << ","
+           << i.second.getMaximumColor().hue() << ","
+           << i.second.getMaximumColor().saturation() << ","
+           << i.second.getMaximumColor().value();
         config.push_back(ss.str());
     }
     return config;

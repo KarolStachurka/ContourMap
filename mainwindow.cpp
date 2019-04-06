@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->hueMaxSlider->setMaximum(359);
 
     setColorPaletteList(uiDialog->getPaletteList());
+    loadColorPalette(0);
+    ui->paletteListView->setCurrentIndex(ui->paletteListView->model()->index(0,0));
+    isInitialized = false;
 
 }
 
@@ -31,12 +34,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_loadFileButton_clicked()
+void MainWindow::showBoard(std::vector<Field> board)
 {
-    uiDialog->display();
+    if(!isInitialized)
+    {
+        return;
+    }
     scene = new QGraphicsScene;
     clearScene();
-    std::vector<Field> board = uiDialog->getBoard().getBoard();
     int sizeX = ui->mapGraphicView->size().width()/uiDialog->getBoard().getSizeX();
     int sizeY = ui->mapGraphicView->size().height()/uiDialog->getBoard().getSizeY();
     for(Field field:board)
@@ -50,6 +55,22 @@ void MainWindow::on_loadFileButton_clicked()
     }
     ui->mapGraphicView->setScene(scene);
     ui->mapGraphicView->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+}
+
+void MainWindow::on_loadFileButton_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "/home",
+                                                    tr("CSV (*.csv)"));
+    if(fileName.isEmpty())
+    {
+        return;
+    }
+    isInitialized = true;
+    uiDialog->loadBoard(fileName.toStdString());
+    uiDialog->display();
+    std::vector<Field> board = uiDialog->getBoard().getBoard();
+    showBoard(board);
     Field max = *std::max_element(board.begin(),board.end());
     Field min = *std::min_element(board.begin(),board.end());
     ui->maxValueLabel->setText(QString::number(max.getValue()));
@@ -67,6 +88,20 @@ void MainWindow::clearScene()
     scene->clear();
 }
 
+void MainWindow::loadColorPalette(int index)
+{
+    QColor maximum,minimum;
+    std::string name,identifier;
+    identifier = std::to_string(index);
+    uiDialog->getPaletteColors(identifier,name,maximum,minimum);
+    colourLowerSliderRectangle(minimum);
+    colourUpperSliderRectangle(maximum);
+    setColoursSliders(maximum,minimum);
+    uiDialog->setColorPalette(ColorPalette(name,maximum,minimum));
+    ui->paletteNameTextEdit->setText(QString::fromStdString(name));
+}
+
+
 void MainWindow::setColorPaletteList(std::vector<std::string> paletteList)
 {
     int rows = paletteList.size();
@@ -79,6 +114,19 @@ void MainWindow::setColorPaletteList(std::vector<std::string> paletteList)
     }
     ui->paletteListView->setModel(model);
 }
+
+void MainWindow::getCurrentColours(QColor &up, QColor &down)
+{
+    int hueDown = ui->hueMinSlider->value();
+    int saturationDown = ui->saturationMinSlider->value();
+    int valueDown = ui->valueMinSlider->value();
+    int hueUp = ui->hueMaxSlider->value();
+    int saturationUp = ui->saturationMaxSlider->value();
+    int valueUp = ui->valueMaxSlider->value();
+    down.setHsv(hueDown,saturationDown,valueDown);
+    up.setHsv(hueUp,saturationUp,valueUp);
+}
+
 
 void MainWindow::colourSliderRectangles(QColor up, QColor down)
 {
@@ -115,6 +163,14 @@ void MainWindow::setColoursSliders(QColor up, QColor down)
     ui->valueMinSlider->setValue(down.value());
 }
 
+void MainWindow::temporaryColourBoard()
+{
+    QColor down, up;
+    getCurrentColours(up,down);
+    uiDialog->setColorPalette(ColorPalette("",up,down));
+    uiDialog->display();
+    showBoard(uiDialog->getBoard().getBoard());
+}
 
 
 void MainWindow::on_hueMaxSlider_sliderMoved(int position)
@@ -125,6 +181,7 @@ void MainWindow::on_hueMaxSlider_sliderMoved(int position)
     QColor newColor;
     newColor.setHsv(hue,saturation,value);
     colourUpperSliderRectangle(newColor);
+    temporaryColourBoard();
 }
 
 void MainWindow::on_saturationMaxSlider_sliderMoved(int position)
@@ -135,6 +192,7 @@ void MainWindow::on_saturationMaxSlider_sliderMoved(int position)
     QColor newColor;
     newColor.setHsv(hue,saturation,value);
     colourUpperSliderRectangle(newColor);
+    temporaryColourBoard();
 }
 
 void MainWindow::on_valueMaxSlider_sliderMoved(int position)
@@ -145,6 +203,7 @@ void MainWindow::on_valueMaxSlider_sliderMoved(int position)
     QColor newColor;
     newColor.setHsv(hue,saturation,value);
     colourUpperSliderRectangle(newColor);
+    temporaryColourBoard();
 }
 
 void MainWindow::on_hueMinSlider_sliderMoved(int position)
@@ -155,6 +214,7 @@ void MainWindow::on_hueMinSlider_sliderMoved(int position)
     QColor newColor;
     newColor.setHsv(hue,saturation,value);
     colourLowerSliderRectangle(newColor);
+    temporaryColourBoard();
 }
 
 void MainWindow::on_saturationMinSlider_sliderMoved(int position)
@@ -165,6 +225,7 @@ void MainWindow::on_saturationMinSlider_sliderMoved(int position)
     QColor newColor;
     newColor.setHsv(hue,saturation,value);
     colourLowerSliderRectangle(newColor);
+    temporaryColourBoard();
 }
 
 void MainWindow::on_valueMinSlider_sliderMoved(int position)
@@ -175,42 +236,48 @@ void MainWindow::on_valueMinSlider_sliderMoved(int position)
     QColor newColor;
     newColor.setHsv(hue,saturation,value);
     colourLowerSliderRectangle(newColor);
+    temporaryColourBoard();
+
 }
 
 void MainWindow::on_savePaletteButton_clicked()
 {
     QModelIndex index = ui->paletteListView->currentIndex();
-    std::string identifier = "palette" + std::to_string(index.row());
+    std::string identifier = std::to_string(index.row());
     std::string name = ui->paletteNameTextEdit->text().toStdString();
-    int hueDown = ui->hueMinSlider->value();
-    int saturationDown = ui->saturationMinSlider->value();
-    int valueDown = ui->valueMinSlider->value();
-    int hueUp = ui->hueMaxSlider->value();
-    int saturationUp = ui->saturationMaxSlider->value();
-    int valueUp = ui->valueMaxSlider->value();
-    QColor down;
-    down.setHsv(hueDown,saturationDown,valueDown);
-    QColor up;
-    up.setHsv(hueUp,saturationUp,valueUp);
+    QColor down, up;
+    getCurrentColours(up,down);
     uiDialog->setPaletteColors(identifier,name,up,down);
     setColorPaletteList(uiDialog->getPaletteList());
+    ui->paletteListView->setCurrentIndex(ui->paletteListView->model()->index(index.row(),0));
 }
 
 void MainWindow::on_paletteListView_clicked(const QModelIndex &index)
 {
-    QColor maximum,minimum;
-    std::string name,identifier;
-    identifier = "palette" + std::to_string(index.row());
-    uiDialog->getPaletteColors(identifier,name,maximum,minimum);
-    colourLowerSliderRectangle(minimum);
-    colourUpperSliderRectangle(maximum);
-    setColoursSliders(maximum,minimum);
-    uiDialog->setColorPalette(ColorPalette(name,maximum,minimum));
-    ui->paletteNameTextEdit->setText(QString::fromStdString(name));
+    loadColorPalette(index.row());
     uiDialog->display();
+    showBoard(uiDialog->getBoard().getBoard());
 }
 
 void MainWindow::on_saveChartButton_clicked()
 {
+    if(!isInitialized)
+    {
+        return;
+    }
+    scene->clearSelection();
+    scene->setSceneRect(scene->itemsBoundingRect());
+    QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
 
+    QPainter painter(&image);
+    scene->render(&painter);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                    "/home",
+                                                    tr("Images (*.png *.xpm *.jpg)"));
+
+    if(!fileName.isEmpty())
+    {
+        image.save(fileName);
+    }
 }

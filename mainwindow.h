@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QStandardItemModel>
+#include <QFileDialog>
 #include <vector>
 #include <uidialog.h>
 #include <field.h>
@@ -21,12 +22,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void diplayBoard();
+    void showBoard(std::vector<Field> board);
+    void loadColorPalette(int index);
     void clearScene();
     void colourSliderRectangles(QColor up, QColor down);
     void setColoursSliders(QColor up, QColor down);
     void colourUpperSliderRectangle(QColor up);
     void colourLowerSliderRectangle(QColor down);
+    void getCurrentColours(QColor &up, QColor &down);
+    void temporaryColourBoard();
     void setColorPaletteList(std::vector<std::string> paletteList);
 
 private slots:
@@ -59,6 +63,7 @@ private:
     QGraphicsRectItem *upperRectColor;
     QGraphicsScene *lowerRect;
     QGraphicsRectItem *lowerRectColor;
+    bool isInitialized;
 
 };
 
