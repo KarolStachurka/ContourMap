@@ -47,16 +47,16 @@ void Board::colourBoard(QColor max, QColor min)
     double maxValue = maxValueField.getValue();
     double minValue= minValueField.getValue();
 
-    int redRatio = max.red() - min.red();
-    int greenRatio = max.green() - min.green();
-    int blueRatio = max.blue() - min.blue();
+    int hueRatio = max.hue() - min.hue();
+    int saturationRatio = max.saturation() - min.saturation();
+    int valueRatio = max.value() - min.value();
 
     for(Field &i:board)
     {
         double ratio = getPositionInRange(minValue,maxValue,i.getValue());
-        i.setColor(ratio * redRatio + min.red(),
-                   ratio * greenRatio + min.green(),
-                   ratio * blueRatio + min.blue()
+        i.setColor(ratio * hueRatio + min.hue(),
+                   ratio * saturationRatio + min.saturation(),
+                   ratio * valueRatio + min.value()
                    );
     }
 

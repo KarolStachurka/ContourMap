@@ -143,7 +143,7 @@
         </widget>
        </item>
        <item row="7" column="4" rowspan="3">
-        <widget class="QSlider" name="blueMinSlider">
+        <widget class="QSlider" name="valueMinSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -195,21 +195,21 @@
         </widget>
        </item>
        <item row="7" column="3" rowspan="3">
-        <widget class="QSlider" name="greenMinSlider">
+        <widget class="QSlider" name="saturationMinSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
        <item row="7" column="2" rowspan="3">
-        <widget class="QSlider" name="redMinSlider">
+        <widget class="QSlider" name="hueMinSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
        </item>
        <item row="3" column="2" rowspan="3">
-        <widget class="QSlider" name="redMaxSlider">
+        <widget class="QSlider" name="hueMaxSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -223,7 +223,7 @@
         </widget>
        </item>
        <item row="3" column="4" rowspan="3">
-        <widget class="QSlider" name="blueMaxSlider">
+        <widget class="QSlider" name="valueMaxSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -249,7 +249,7 @@
         </widget>
        </item>
        <item row="3" column="3" rowspan="3">
-        <widget class="QSlider" name="greenMaxSlider">
+        <widget class="QSlider" name="saturationMaxSlider">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>

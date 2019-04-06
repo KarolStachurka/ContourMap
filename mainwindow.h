@@ -32,17 +32,17 @@ public:
 private slots:
     void on_loadFileButton_clicked();
     
-    void on_redMaxSlider_sliderMoved(int position);
+    void on_hueMaxSlider_sliderMoved(int position);
 
-    void on_greenMaxSlider_sliderMoved(int position);
+    void on_saturationMaxSlider_sliderMoved(int position);
 
-    void on_blueMaxSlider_sliderMoved(int position);
+    void on_valueMaxSlider_sliderMoved(int position);
 
-    void on_redMinSlider_sliderMoved(int position);
+    void on_hueMinSlider_sliderMoved(int position);
 
-    void on_greenMinSlider_sliderMoved(int position);
+    void on_saturationMinSlider_sliderMoved(int position);
 
-    void on_blueMinSlider_sliderMoved(int position);
+    void on_valueMinSlider_sliderMoved(int position);
 
     void on_savePaletteButton_clicked();
 

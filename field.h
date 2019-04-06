@@ -19,7 +19,7 @@ public:
     Field();
     Field(int x, int y, double value);
     void setCordinates(int x, int y);
-    void setColor(int red, int green, int blue);
+    void setColor(int hue, int saturation, int value);
     int getX();
     int getY();
     double getValue();

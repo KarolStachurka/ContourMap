@@ -18,9 +18,9 @@ void Field::setCordinates(int x, int y)
     cordinateY = y;
 }
 
-void Field::setColor(int red, int green, int blue)
+void Field::setColor(int hue, int saturation, int value)
 {
-    color = QColor(red,green,blue);
+    color.setHsv(hue,saturation,value);
 }
 
 double Field::getValue()

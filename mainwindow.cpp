@@ -14,12 +14,12 @@ MainWindow::MainWindow(QWidget *parent) :
     lowerRectColor = new QGraphicsRectItem;
     colourSliderRectangles(QColor(0,0,0),QColor(0,0,0));
 
-    ui->blueMinSlider->setMaximum(255);
-    ui->blueMaxSlider->setMaximum(255);
-    ui->greenMinSlider->setMaximum(255);
-    ui->greenMaxSlider->setMaximum(255);
-    ui->redMinSlider->setMaximum(255);
-    ui->redMaxSlider->setMaximum(255);
+    ui->valueMinSlider->setMaximum(255);
+    ui->valueMaxSlider->setMaximum(255);
+    ui->saturationMinSlider->setMaximum(255);
+    ui->saturationMaxSlider->setMaximum(255);
+    ui->hueMinSlider->setMaximum(359);
+    ui->hueMaxSlider->setMaximum(359);
 
     setColorPaletteList(uiDialog->getPaletteList());
 
@@ -106,68 +106,74 @@ void MainWindow::colourLowerSliderRectangle(QColor down)
 
 void MainWindow::setColoursSliders(QColor up, QColor down)
 {
-    ui->redMaxSlider->setValue(up.red());
-    ui->greenMaxSlider->setValue(up.green());
-    ui->blueMaxSlider->setValue(up.blue());
+    ui->hueMaxSlider->setValue(up.hue());
+    ui->saturationMaxSlider->setValue(up.saturation());
+    ui->valueMaxSlider->setValue(up.value());
 
-    ui->redMinSlider->setValue(down.red());
-    ui->greenMinSlider->setValue(down.green());
-    ui->blueMinSlider->setValue(down.blue());
+    ui->hueMinSlider->setValue(down.hue());
+    ui->saturationMinSlider->setValue(down.saturation());
+    ui->valueMinSlider->setValue(down.value());
 }
 
 
 
-void MainWindow::on_redMaxSlider_sliderMoved(int position)
+void MainWindow::on_hueMaxSlider_sliderMoved(int position)
 {
-    int red = position;
-    int green = ui->greenMaxSlider->value();
-    int blue = ui->blueMaxSlider->value();
-    QColor newColor = QColor(red,green,blue);
+    int hue = position;
+    int saturation = ui->saturationMaxSlider->value();
+    int value = ui->valueMaxSlider->value();
+    QColor newColor;
+    newColor.setHsv(hue,saturation,value);
     colourUpperSliderRectangle(newColor);
 }
 
-void MainWindow::on_greenMaxSlider_sliderMoved(int position)
+void MainWindow::on_saturationMaxSlider_sliderMoved(int position)
 {
-    int red = ui->redMaxSlider->value();
-    int green = position;
-    int blue = ui->blueMaxSlider->value();
-    QColor newColor = QColor(red,green,blue);
+    int hue = ui->hueMaxSlider->value();
+    int saturation = position;
+    int value = ui->valueMaxSlider->value();
+    QColor newColor;
+    newColor.setHsv(hue,saturation,value);
     colourUpperSliderRectangle(newColor);
 }
 
-void MainWindow::on_blueMaxSlider_sliderMoved(int position)
+void MainWindow::on_valueMaxSlider_sliderMoved(int position)
 {
-    int red = ui->redMaxSlider->value();
-    int green = ui->greenMaxSlider->value();
-    int blue = position;
-    QColor newColor = QColor(red,green,blue);
+    int hue = ui->hueMaxSlider->value();
+    int saturation = ui->saturationMaxSlider->value();
+    int value = position;
+    QColor newColor;
+    newColor.setHsv(hue,saturation,value);
     colourUpperSliderRectangle(newColor);
 }
 
-void MainWindow::on_redMinSlider_sliderMoved(int position)
+void MainWindow::on_hueMinSlider_sliderMoved(int position)
 {
-    int red = position;
-    int green = ui->greenMinSlider->value();
-    int blue = ui->blueMinSlider->value();
-    QColor newColor = QColor(red,green,blue);
+    int hue = position;
+    int saturation = ui->saturationMinSlider->value();
+    int value = ui->valueMinSlider->value();
+    QColor newColor;
+    newColor.setHsv(hue,saturation,value);
     colourLowerSliderRectangle(newColor);
 }
 
-void MainWindow::on_greenMinSlider_sliderMoved(int position)
+void MainWindow::on_saturationMinSlider_sliderMoved(int position)
 {
-    int red = ui->redMinSlider->value();
-    int green = position;
-    int blue = ui->blueMinSlider->value();
-    QColor newColor = QColor(red,green,blue);
+    int hue = ui->hueMinSlider->value();
+    int saturation = position;
+    int value = ui->valueMinSlider->value();
+    QColor newColor;
+    newColor.setHsv(hue,saturation,value);
     colourLowerSliderRectangle(newColor);
 }
 
-void MainWindow::on_blueMinSlider_sliderMoved(int position)
+void MainWindow::on_valueMinSlider_sliderMoved(int position)
 {
-    int red = ui->redMinSlider->value();
-    int green = ui->greenMinSlider->value();
-    int blue = position;
-    QColor newColor = QColor(red,green,blue);
+    int hue = ui->hueMinSlider->value();
+    int saturation = ui->saturationMinSlider->value();
+    int value = position;
+    QColor newColor;
+    newColor.setHsv(hue,saturation,value);
     colourLowerSliderRectangle(newColor);
 }
 
@@ -176,14 +182,16 @@ void MainWindow::on_savePaletteButton_clicked()
     QModelIndex index = ui->paletteListView->currentIndex();
     std::string identifier = "palette" + std::to_string(index.row());
     std::string name = ui->paletteNameTextEdit->text().toStdString();
-    int redDown = ui->redMinSlider->value();
-    int greenDown = ui->greenMinSlider->value();
-    int blueDown = ui->blueMinSlider->value();
-    int redUp = ui->redMaxSlider->value();
-    int greenUp = ui->greenMaxSlider->value();
-    int blueUp = ui->blueMaxSlider->value();
-    QColor down = QColor(redDown,greenDown,blueDown);
-    QColor up = QColor(redUp,greenUp,blueUp);
+    int hueDown = ui->hueMinSlider->value();
+    int saturationDown = ui->saturationMinSlider->value();
+    int valueDown = ui->valueMinSlider->value();
+    int hueUp = ui->hueMaxSlider->value();
+    int saturationUp = ui->saturationMaxSlider->value();
+    int valueUp = ui->valueMaxSlider->value();
+    QColor down;
+    down.setHsv(hueDown,saturationDown,valueDown);
+    QColor up;
+    up.setHsv(hueUp,saturationUp,valueUp);
     uiDialog->setPaletteColors(identifier,name,up,down);
     setColorPaletteList(uiDialog->getPaletteList());
 }
