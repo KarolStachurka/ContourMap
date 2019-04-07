@@ -26,13 +26,13 @@ void UIDialog::loadBoard(std::string fileName)
     board.colourBoard(colorPalette.getMaximumColor(), colorPalette.getMinimumColor());
 }
 
-void UIDialog::addNewPalette(std::string identifier, std::string name, QColor maximum, QColor minimum)
+void UIDialog::addNewPalette(int identifier, std::string name, QColor maximum, QColor minimum)
 {
     ColorPalette palette = ColorPalette(name,minimum,maximum);
-    colorPaletteMap.insert(std::pair<std::string,ColorPalette>(identifier,palette));
+    colorPaletteMap.insert(std::pair<int,ColorPalette>(identifier,palette));
 }
 
-void UIDialog::getPaletteColors(std::string identifier, std::string &name, QColor &maximum, QColor &minimum)
+void UIDialog::getPaletteColors(int identifier, std::string &name, QColor &maximum, QColor &minimum)
 {
     ColorPalette palette = colorPaletteMap.at(identifier);
     name = palette.getName();
@@ -40,7 +40,7 @@ void UIDialog::getPaletteColors(std::string identifier, std::string &name, QColo
     minimum = palette.getMinimumColor();
 }
 
-void UIDialog::setPaletteColors(std::string identifier, std::string name, QColor maximum, QColor minimum)
+void UIDialog::setPaletteColors(int identifier, std::string name, QColor maximum, QColor minimum)
 {
     ColorPalette &palette = colorPaletteMap[identifier];
     palette.setName(name);
@@ -52,11 +52,12 @@ void UIDialog::setPalettesFromConfig(std::vector<std::string> config)
 {
     for(auto i:config)
     {
-        std::string name, identifier;
+        std::string name, tempIdentifier;
         std::stringstream ss(i);
-        int number;
+        int number, identifier;
         std::vector<int> configRow;
-        std::getline(ss, identifier, ',');
+        std::getline(ss, tempIdentifier, ',');
+        identifier = std::atoi(tempIdentifier.c_str());
         std::getline(ss, name, ',');
         while(ss >> number)
         {
@@ -110,7 +111,6 @@ ColorPalette UIDialog::getColorPalette()
 {
     return colorPalette;
 }
-
 
 Board UIDialog::getBoard()
 {

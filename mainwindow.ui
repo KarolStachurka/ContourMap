@@ -37,22 +37,22 @@
      <rect>
       <x>10</x>
       <y>49</y>
-      <width>861</width>
+      <width>1061</width>
       <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="saveChartButton">
+      <widget class="QPushButton" name="loadFileButton">
        <property name="text">
-        <string>Save Chart</string>
+        <string>Load Map From Matrix</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="loadChartButton">
+      <widget class="QPushButton" name="saveChartButton">
        <property name="text">
-        <string>Load Chart</string>
+        <string>Save Chart</string>
        </property>
       </widget>
      </item>
@@ -78,7 +78,7 @@
       <x>20</x>
       <y>110</y>
       <width>1051</width>
-      <height>702</height>
+      <height>757</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -96,26 +96,58 @@
       </spacer>
      </item>
      <item>
-      <widget class="QGraphicsView" name="mapGraphicView">
-       <property name="minimumSize">
-        <size>
-         <width>500</width>
-         <height>500</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>500</height>
-        </size>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>500</width>
-         <height>500</height>
-        </size>
-       </property>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="1">
+        <widget class="QGraphicsView" name="mapGraphicView">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>500</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>500</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>500</width>
+           <height>500</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="zooOutButton">
+         <property name="text">
+          <string>Zoom out</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="zoomInButton">
+         <property name="text">
+          <string>Zoom In</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="axisXLabel">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="axisYLabel">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <spacer name="verticalSpacer_2">
@@ -135,7 +167,7 @@
        <item row="2" column="2" colspan="3">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>RGB</string>
+          <string>HSV</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -152,7 +184,7 @@
        <item row="6" column="2" colspan="3">
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>RGB</string>
+          <string>HSV</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -255,20 +287,13 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1" colspan="4">
+        <widget class="QLineEdit" name="paletteNameTextEdit"/>
+       </item>
        <item row="3" column="1">
         <widget class="QLabel" name="maxValueLabel">
          <property name="text">
           <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="4">
-        <widget class="QLineEdit" name="paletteNameTextEdit"/>
-       </item>
-       <item row="0" column="1" colspan="4">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Palette Name:</string>
          </property>
         </widget>
        </item>
@@ -288,22 +313,16 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1" colspan="4">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Palette Name:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="loadFileButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>211</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Create new Map</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

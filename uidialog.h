@@ -12,7 +12,7 @@ class UIDialog
 private:
     Board board;
     InputOutput *inputOutput;
-    std::map<std::string, ColorPalette> colorPaletteMap;
+    std::map<int, ColorPalette> colorPaletteMap;
     ColorPalette colorPalette;
 
 public:
@@ -26,9 +26,9 @@ public:
     std::vector<std::string> createPalettesConfig();
     std::vector<std::string> getPaletteList();
     void setPalettesFromConfig(std::vector<std::string> config);
-    void addNewPalette(std::string identifier, std::string name, QColor maximum, QColor minimum);
-    void getPaletteColors(std::string identifier, std::string &name, QColor &maximum, QColor &minimum);
-    void setPaletteColors(std::string identifier, std::string name, QColor maximum, QColor minimum);
+    void addNewPalette(int identifier, std::string name, QColor maximum, QColor minimum);
+    void getPaletteColors(int identifier, std::string &name, QColor &maximum, QColor &minimum);
+    void setPaletteColors(int identifier, std::string name, QColor maximum, QColor minimum);
 
 };
 

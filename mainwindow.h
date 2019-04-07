@@ -54,6 +54,10 @@ private slots:
 
     void on_saveChartButton_clicked();
 
+    void on_zoomInButton_clicked();
+
+    void on_zooOutButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     UIDialog *uiDialog;
@@ -64,6 +68,7 @@ private:
     QGraphicsScene *lowerRect;
     QGraphicsRectItem *lowerRectColor;
     bool isInitialized;
+    int zoom;
 
 };
 

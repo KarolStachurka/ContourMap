@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     loadColorPalette(0);
     ui->paletteListView->setCurrentIndex(ui->paletteListView->model()->index(0,0));
     isInitialized = false;
-
+    zoom = 1;
 }
 
 MainWindow::~MainWindow()
@@ -42,8 +42,8 @@ void MainWindow::showBoard(std::vector<Field> board)
     }
     scene = new QGraphicsScene;
     clearScene();
-    int sizeX = ui->mapGraphicView->size().width()/uiDialog->getBoard().getSizeX();
-    int sizeY = ui->mapGraphicView->size().height()/uiDialog->getBoard().getSizeY();
+    int sizeX = ui->mapGraphicView->size().width()/uiDialog->getBoard().getSizeX()*zoom;
+    int sizeY = ui->mapGraphicView->size().height()/uiDialog->getBoard().getSizeY()*zoom;
     for(Field field:board)
     {
         QGraphicsRectItem *item = new QGraphicsRectItem;
@@ -54,7 +54,10 @@ void MainWindow::showBoard(std::vector<Field> board)
         boardObjects.push_back(item);
     }
     ui->mapGraphicView->setScene(scene);
-    ui->mapGraphicView->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+    if(zoom == 1)
+    {
+        ui->mapGraphicView->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+    }
 }
 
 void MainWindow::on_loadFileButton_clicked()
@@ -91,9 +94,8 @@ void MainWindow::clearScene()
 void MainWindow::loadColorPalette(int index)
 {
     QColor maximum,minimum;
-    std::string name,identifier;
-    identifier = std::to_string(index);
-    uiDialog->getPaletteColors(identifier,name,maximum,minimum);
+    std::string name;
+    uiDialog->getPaletteColors(index,name,maximum,minimum);
     colourLowerSliderRectangle(minimum);
     colourUpperSliderRectangle(maximum);
     setColoursSliders(maximum,minimum);
@@ -243,11 +245,10 @@ void MainWindow::on_valueMinSlider_sliderMoved(int position)
 void MainWindow::on_savePaletteButton_clicked()
 {
     QModelIndex index = ui->paletteListView->currentIndex();
-    std::string identifier = std::to_string(index.row());
     std::string name = ui->paletteNameTextEdit->text().toStdString();
     QColor down, up;
     getCurrentColours(up,down);
-    uiDialog->setPaletteColors(identifier,name,up,down);
+    uiDialog->setPaletteColors(index.row(),name,up,down);
     setColorPaletteList(uiDialog->getPaletteList());
     ui->paletteListView->setCurrentIndex(ui->paletteListView->model()->index(index.row(),0));
 }
@@ -255,6 +256,10 @@ void MainWindow::on_savePaletteButton_clicked()
 void MainWindow::on_paletteListView_clicked(const QModelIndex &index)
 {
     loadColorPalette(index.row());
+    if(!isInitialized)
+    {
+        return;
+    }
     uiDialog->display();
     showBoard(uiDialog->getBoard().getBoard());
 }
@@ -280,4 +285,18 @@ void MainWindow::on_saveChartButton_clicked()
     {
         image.save(fileName);
     }
+}
+
+void MainWindow::on_zoomInButton_clicked()
+{
+    if(zoom < 32)
+        zoom *=2;
+    showBoard(uiDialog->getBoard().getBoard());
+}
+
+void MainWindow::on_zooOutButton_clicked()
+{
+    if(zoom > 1)
+        zoom /=2;
+    showBoard(uiDialog->getBoard().getBoard());
 }
