@@ -63,13 +63,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="loadPaletteButton">
-       <property name="text">
-        <string>Load Color Palette</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -136,14 +129,14 @@
        <item row="1" column="1">
         <widget class="QLabel" name="axisXLabel">
          <property name="text">
-          <string>TextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
         <widget class="QLabel" name="axisYLabel">
          <property name="text">
-          <string>TextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>
