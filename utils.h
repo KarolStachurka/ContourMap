@@ -33,9 +33,6 @@ public:
           \returns min value in container
         */
     T getMinValue();
-
 };
-
-
 
 #endif // UTILS_H
